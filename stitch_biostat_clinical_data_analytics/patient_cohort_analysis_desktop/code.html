@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BioStat | Patient Cohort Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#d2e4ff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#244971",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-background": "#191c1f",
+                        "inverse-primary": "#a9c7ff",
+                        "on-primary-fixed": "#001b3d",
+                        "on-primary-container": "#c8daff",
+                        "outline-variant": "#c2c6d4",
+                        "on-surface-variant": "#424752",
+                        "surface": "#f7f9fe",
+                        "surface-container-highest": "#e0e2e7",
+                        "on-surface": "#191c1f",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#e0dfdf",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e6e8ed",
+                        "secondary": "#5d5e5f",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "surface-tint": "#005db6",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d8dade",
+                        "secondary-fixed": "#e3e2e2",
+                        "surface-variant": "#e0e2e7",
+                        "tertiary-fixed-dim": "#a6c9f8",
+                        "surface-container-low": "#f2f4f8",
+                        "primary-container": "#005eb8",
+                        "tertiary-container": "#3e618b",
+                        "primary-fixed": "#d6e3ff",
+                        "on-secondary-container": "#626363",
+                        "on-secondary-fixed-variant": "#464747",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2d3134",
+                        "on-tertiary-fixed-variant": "#244871",
+                        "background": "#f7f9fe",
+                        "inverse-on-surface": "#eff1f5",
+                        "error": "#ba1a1a",
+                        "surface-container": "#eceef2",
+                        "surface-bright": "#f7f9fe",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#00468c",
+                        "primary": "#00478d",
+                        "on-tertiary-fixed": "#001c37",
+                        "on-tertiary-container": "#c3dbff",
+                        "outline": "#727783"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "margin": "24px",
+                        "container-max": "1440px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Public Sans"],
+                        "data-tabular": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h3": ["Public Sans"],
+                        "h1": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "data-tabular": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c2c6d4; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-screen w-64 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-lg z-20">
+<div class="px-lg mb-xl">
+<h1 class="font-h3 text-h3 font-bold tracking-tight text-primary">BioStat</h1>
+<p class="text-on-surface-variant font-body-md opacity-70">Clinical Analytics Platform</p>
+</div>
+<nav class="flex-1">
+<div class="flex items-center py-sm px-md mx-2 mb-xs cursor-pointer hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-sm" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</div>
+<div class="flex items-center py-sm px-md mx-2 mb-xs cursor-pointer hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-sm" data-icon="clinical_notes">clinical_notes</span>
+<span class="font-body-md">Trials</span>
+</div>
+<!-- Active State: Patients -->
+<div class="flex items-center py-sm px-md mx-2 mb-xs cursor-pointer bg-primary text-on-primary rounded-lg">
+<span class="material-symbols-outlined mr-sm" data-icon="group">group</span>
+<span class="font-body-md font-bold">Patients</span>
+</div>
+<div class="flex items-center py-sm px-md mx-2 mb-xs cursor-pointer hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-sm" data-icon="notifications_active">notifications_active</span>
+<span class="font-body-md">Alerts</span>
+</div>
+<div class="flex items-center py-sm px-md mx-2 mb-xs cursor-pointer hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-sm" data-icon="description">description</span>
+<span class="font-body-md">Reports</span>
+</div>
+<div class="flex items-center py-sm px-md mx-2 mb-xs cursor-pointer hover:bg-surface-container-high transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined mr-sm" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-body-md">Admin</span>
+</div>
+</nav>
+<div class="px-md mt-auto">
+<div class="flex items-center py-sm px-md hover:bg-surface-container-high transition-colors text-on-surface-variant cursor-pointer">
+<span class="material-symbols-outlined mr-sm" data-icon="help">help</span>
+<span class="font-body-md">FAQ</span>
+</div>
+</div>
+</aside>
+<!-- Top Utility Bar -->
+<header class="fixed top-0 right-0 left-64 h-16 border-b border-outline-variant bg-surface flex items-center justify-between px-lg z-10">
+<div class="flex items-center flex-1">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg pl-10 pr-4 py-1.5 font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Search cohorts, patient IDs, or trial codes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-md">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="flex items-center ml-md border-l border-outline-variant pl-md cursor-pointer">
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="Professional portrait of a chief medical officer in a clinical environment. The lighting is sterile and bright, emphasizing a modern healthcare setting. The composition is a clean headshot with a blurred medical laboratory background in soft blues and whites." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6D-19CBK6l7eu0IWn-v3tBKN7nyFKncRDsx3MLuJjnqZpq8E0CZEp5AWfVuZNXYp7q_XlmaIZQeDUECpo_s81qdn8c6hseozvKyojEnFmHuPbFnlEU04m3X5C90ZzPJqY4moQSVVXqstU7OyU6pnBvKIhMg16eITYDCZUzKyEKLqot4rsfNzsVWiKFwBEV-HQnmhuDzdK9gAmar07foPG58zuBZcfr7K6t3Iv7niZlwAq-6qhMcNN1N4fyev5Ho0mcS6RQiL3kCdm"/>
+<div class="ml-sm">
+<p class="font-label-caps text-on-surface font-bold leading-tight uppercase">Dr. Aris Thorne</p>
+<p class="text-[10px] text-on-surface-variant leading-tight">Chief Investigator</p>
+</div>
+<span class="material-symbols-outlined ml-xs text-on-surface-variant" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 mt-16 p-lg grid grid-cols-12 gap-lg bg-surface min-h-[calc(100vh-64px)]">
+<!-- Top KPIs -->
+<section class="col-span-12 grid grid-cols-4 gap-lg mb-base">
+<div class="bg-surface-container-lowest border border-outline-variant p-md flex flex-col justify-between">
+<div>
+<p class="font-label-caps text-on-surface-variant mb-xs">TOTAL PATIENTS</p>
+<h2 class="font-h2 text-h2 text-primary">1,284</h2>
+</div>
+<div class="flex items-center mt-sm text-green-600">
+<span class="material-symbols-outlined text-[16px] mr-xs" data-icon="trending_up">trending_up</span>
+<span class="font-data-tabular">+4.2% from prev. month</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-md flex flex-col justify-between">
+<div>
+<p class="font-label-caps text-on-surface-variant mb-xs">ENROLLMENT TREND</p>
+<div class="h-10 flex items-end space-x-1">
+<div class="bg-primary-container w-full h-[60%]"></div>
+<div class="bg-primary-container w-full h-[40%]"></div>
+<div class="bg-primary-container w-full h-[80%]"></div>
+<div class="bg-primary-container w-full h-[55%]"></div>
+<div class="bg-primary w-full h-[95%]"></div>
+</div>
+</div>
+<p class="font-data-tabular text-on-surface-variant mt-sm">On-track for Q3 targets</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-md flex flex-col justify-between">
+<div>
+<p class="font-label-caps text-on-surface-variant mb-xs">DATA INTEGRITY SCORE</p>
+<div class="flex items-baseline">
+<h2 class="font-h2 text-h2 text-tertiary">98.2%</h2>
+<span class="ml-sm font-label-caps text-on-surface-variant">OPTIMAL</span>
+</div>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mt-sm">
+<div class="bg-tertiary h-full w-[98%]"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-md flex flex-col justify-between">
+<div>
+<p class="font-label-caps text-on-surface-variant mb-xs">PENDING AUDITS</p>
+<h2 class="font-h2 text-h2 text-error">12</h2>
+</div>
+<div class="flex items-center mt-sm text-error">
+<span class="material-symbols-outlined text-[16px] mr-xs" data-icon="warning">warning</span>
+<span class="font-data-tabular">Requires Immediate Action</span>
+</div>
+</div>
+</section>
+<!-- Sidebar Filtering -->
+<aside class="col-span-2 space-y-lg">
+<div class="bg-surface-container-lowest border border-outline-variant p-md">
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-label-caps text-on-surface">FILTERS</h3>
+<button class="text-primary font-label-caps">CLEAR ALL</button>
+</div>
+<div class="space-y-md">
+<div>
+<label class="font-label-caps text-on-surface-variant block mb-xs">COHORT STATUS</label>
+<select class="w-full bg-surface border border-outline-variant text-body-md py-1.5 px-2 rounded">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Recruiting</option>
+<option>Completed</option>
+</select>
+</div>
+<div>
+<label class="font-label-caps text-on-surface-variant block mb-xs">PRIMARY ENDPOINT</label>
+<div class="space-y-sm">
+<label class="flex items-center cursor-pointer">
+<input checked="" class="form-checkbox h-3 w-3 text-primary border-outline rounded" type="checkbox"/>
+<span class="ml-sm font-body-md">Efficacy</span>
+</label>
+<label class="flex items-center cursor-pointer">
+<input class="form-checkbox h-3 w-3 text-primary border-outline rounded" type="checkbox"/>
+<span class="ml-sm font-body-md">Safety</span>
+</label>
+<label class="flex items-center cursor-pointer">
+<input class="form-checkbox h-3 w-3 text-primary border-outline rounded" type="checkbox"/>
+<span class="ml-sm font-body-md">Bioavailability</span>
+</label>
+</div>
+</div>
+<div>
+<label class="font-label-caps text-on-surface-variant block mb-xs">AGE RANGE</label>
+<input class="w-full h-1.5 bg-surface-container rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
+<div class="flex justify-between font-data-tabular text-on-surface-variant mt-xs">
+<span>18</span>
+<span>85+</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-md">
+<h3 class="font-label-caps text-on-surface mb-md">RECENT VIEWS</h3>
+<ul class="space-y-sm">
+<li class="font-body-md text-primary cursor-pointer hover:underline">Ph-II Oncology-A1</li>
+<li class="font-body-md text-primary cursor-pointer hover:underline">CV-Risk Cohort B</li>
+<li class="font-body-md text-primary cursor-pointer hover:underline">Neuro-Dev-Baseline</li>
+</ul>
+</div>
+</aside>
+<!-- Central Data Table -->
+<section class="col-span-7">
+<div class="bg-surface-container-lowest border border-outline-variant h-full flex flex-col">
+<div class="p-md border-b border-outline-variant flex items-center justify-between bg-surface-container-low">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-primary mr-sm" data-icon="table_view">table_view</span>
+<h2 class="font-h3 text-h3">Patient Cohort: PH-II-ONCO-A1</h2>
+</div>
+<div class="flex space-x-sm">
+<button class="h-9 px-md bg-surface border border-outline-variant font-label-caps flex items-center hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px] mr-xs" data-icon="file_download">file_download</span> EXPORT
+                        </button>
+<button class="h-9 px-md bg-primary text-on-primary font-label-caps flex items-center hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px] mr-xs" data-icon="add">add</span> NEW SUBJECT
+                        </button>
+</div>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container-lowest z-10">
+<tr class="border-b border-outline-variant">
+<th class="p-md font-label-caps text-on-surface-variant">PATIENT ID</th>
+<th class="p-md font-label-caps text-on-surface-variant">GENDER/AGE</th>
+<th class="p-md font-label-caps text-on-surface-variant">ENROLLMENT DATE</th>
+<th class="p-md font-label-caps text-on-surface-variant">STATUS</th>
+<th class="p-md font-label-caps text-on-surface-variant">INTEGRITY</th>
+<th class="p-md font-label-caps text-on-surface-variant text-right">ACTION</th>
+</tr>
+</thead>
+<tbody class="font-data-tabular">
+<tr class="border-b border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors group">
+<td class="p-md text-primary font-bold">PT-882104</td>
+<td class="p-md">M / 54</td>
+<td class="p-md">2023-11-12</td>
+<td class="p-md">
+<span class="bg-green-100 text-green-800 px-sm py-xs rounded font-label-caps">ACTIVE</span>
+</td>
+<td class="p-md">
+<div class="flex items-center">
+<div class="w-12 bg-surface-container h-1 mr-sm">
+<div class="bg-green-600 h-full w-[100%]"></div>
+</div>
+<span>100%</span>
+</div>
+</td>
+<td class="p-md text-right">
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="more_vert">more_vert</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors group">
+<td class="p-md text-primary font-bold">PT-882109</td>
+<td class="p-md">F / 42</td>
+<td class="p-md">2023-11-14</td>
+<td class="p-md">
+<span class="bg-green-100 text-green-800 px-sm py-xs rounded font-label-caps">ACTIVE</span>
+</td>
+<td class="p-md">
+<div class="flex items-center">
+<div class="w-12 bg-surface-container h-1 mr-sm">
+<div class="bg-green-600 h-full w-[95%]"></div>
+</div>
+<span>95%</span>
+</div>
+</td>
+<td class="p-md text-right">
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="more_vert">more_vert</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors group">
+<td class="p-md text-primary font-bold">PT-882115</td>
+<td class="p-md">M / 68</td>
+<td class="p-md">2023-11-15</td>
+<td class="p-md">
+<span class="bg-yellow-100 text-yellow-800 px-sm py-xs rounded font-label-caps">SCREENING</span>
+</td>
+<td class="p-md">
+<div class="flex items-center">
+<div class="w-12 bg-surface-container h-1 mr-sm">
+<div class="bg-yellow-500 h-full w-[45%]"></div>
+</div>
+<span>45%</span>
+</div>
+</td>
+<td class="p-md text-right">
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="more_vert">more_vert</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors group">
+<td class="p-md text-primary font-bold">PT-882118</td>
+<td class="p-md">F / 31</td>
+<td class="p-md">2023-11-16</td>
+<td class="p-md">
+<span class="bg-red-100 text-red-800 px-sm py-xs rounded font-label-caps">WITHDRAWN</span>
+</td>
+<td class="p-md">
+<div class="flex items-center">
+<div class="w-12 bg-surface-container h-1 mr-sm">
+<div class="bg-red-600 h-full w-[22%]"></div>
+</div>
+<span>22%</span>
+</div>
+</td>
+<td class="p-md text-right">
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="more_vert">more_vert</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors group">
+<td class="p-md text-primary font-bold">PT-882122</td>
+<td class="p-md">M / 59</td>
+<td class="p-md">2023-11-20</td>
+<td class="p-md">
+<span class="bg-green-100 text-green-800 px-sm py-xs rounded font-label-caps">ACTIVE</span>
+</td>
+<td class="p-md">
+<div class="flex items-center">
+<div class="w-12 bg-surface-container h-1 mr-sm">
+<div class="bg-green-600 h-full w-[100%]"></div>
+</div>
+<span>100%</span>
+</div>
+</td>
+<td class="p-md text-right">
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="more_vert">more_vert</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-sm bg-surface-container-low border-t border-outline-variant flex items-center justify-between font-data-tabular">
+<span class="text-on-surface-variant">Showing 1-15 of 248 patients</span>
+<div class="flex space-x-xs">
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant hover:bg-surface transition-colors"><span class="material-symbols-outlined text-[18px]" data-icon="chevron_left">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center border border-primary bg-primary text-on-primary">1</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant hover:bg-surface transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant hover:bg-surface transition-colors">3</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant hover:bg-surface transition-colors"><span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Collaboration Panel -->
+<aside class="col-span-3">
+<div class="bg-surface-container-lowest border border-outline-variant h-full flex flex-col">
+<div class="p-md border-b border-outline-variant flex items-center bg-surface-container-low">
+<span class="material-symbols-outlined text-primary mr-sm" data-icon="forum">forum</span>
+<h3 class="font-label-caps text-on-surface">COLLABORATION</h3>
+</div>
+<div class="flex-1 overflow-auto p-md space-y-md">
+<!-- Comment 1 -->
+<div class="space-y-sm">
+<div class="flex items-start">
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="Close-up headshot of a senior medical data analyst in a brightly lit, sterile office environment. The style is professional and corporate, with clinical blues and greys defining the color palette. The individual has a serious and focused expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-R94Q2kmNH-HkN7vvbUycFhecoKMlUDtiMCsAF9rZmb8YleD8wuuaHDHXKoGS7iNfpxd6DNK0YoPuxZ_YeKeEr2Y_5F1KJ5iKchR-j84nusFEXfJXebiRAJ1WF_gjbBsxidRC1Dz84r5te2oUcMxpuRhOVU0lN7yuH7H9_GyKmyZONQNFOakwRGzFj1dprUSHbRb2sk1Mmga8Dve1q8xUBA4IM5DsZS-FFV6JVVHNVc88HNmiVIDXvnewJ8FaiesppwdnV4BLO8t8"/>
+<div class="ml-sm flex-1">
+<div class="flex justify-between items-baseline">
+<p class="font-body-md font-bold text-on-surface">Mark J. (Lead Analyst)</p>
+<span class="text-[10px] text-on-surface-variant font-data-tabular">2H AGO</span>
+</div>
+<div class="mt-xs bg-surface border border-outline-variant p-sm rounded-lg shadow-sm">
+<p class="text-[11px] font-label-caps text-primary mb-xs">RE: PT-882118</p>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                                        Subject withdrawn due to adverse event grade 3. Ethics committee notified. Please update the protocol adherence report.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment 2 -->
+<div class="space-y-sm">
+<div class="flex items-start">
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="Headshot of a female clinical trial coordinator in a modern medical setting. Soft, diffuse natural lighting fills the frame, creating a high-key, professional look. The background is a clean white and silver laboratory interior." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgzNK9qNG-CumqLYp5OWYPq7N00RNyEY5NTOOZVipseDpvF6FQ5GwI7uKbkc1WGwBBzCMoDocZPMS-FR0Na6kdB8q3ounOlY5HhcfKBYzB0Fiv4Lt4vbQjtqsxUboKWXT4ycF-OlvJ4rzRn3WN_t8ewVUIXiTuPWPlRpamRc7Ts2S1fK9Jo3DssczYnlq6O7OvsaRslO3yS5f1E5cHa6RtD95PmtmcW03Zf815Aj4El12rc5Gd2ax4N-hnOgiv8aYCRWdVxzltTW4z"/>
+<div class="ml-sm flex-1">
+<div class="flex justify-between items-baseline">
+<p class="font-body-md font-bold text-on-surface">Sarah Lee (Coordinator)</p>
+<span class="text-[10px] text-on-surface-variant font-data-tabular">4H AGO</span>
+</div>
+<div class="mt-xs bg-surface border border-outline-variant p-sm rounded-lg shadow-sm">
+<p class="text-[11px] font-label-caps text-primary mb-xs">RE: ALL COHORT</p>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                                        Data integrity scores look great for this batch. No missing values detected in the latest audit.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant bg-surface-container-low">
+<div class="relative">
+<textarea class="w-full bg-surface border border-outline-variant rounded p-sm font-body-md focus:border-primary outline-none resize-none h-20 text-on-surface" placeholder="Add a comment..." spellcheck="false"></textarea>
+<div class="flex justify-between items-center mt-sm">
+<div class="flex space-x-sm">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]" data-icon="attach_file">attach_file</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]" data-icon="alternate_email">alternate_email</span></button>
+</div>
+<button class="bg-primary text-on-primary px-md py-1.5 font-label-caps rounded hover:opacity-90 transition-opacity">POST</button>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Floating Action Button (FAB) - Suppressed per rules for Details/Analysis screens, but contextually relevant for Home. Since this is an Analysis screen, it is omitted. -->
+</body></html>

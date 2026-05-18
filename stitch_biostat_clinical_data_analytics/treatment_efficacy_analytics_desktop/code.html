@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BioStat - Treatment Efficacy Charts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Public+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#d2e4ff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#244971",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-background": "#191c1f",
+                        "inverse-primary": "#a9c7ff",
+                        "on-primary-fixed": "#001b3d",
+                        "on-primary-container": "#c8daff",
+                        "outline-variant": "#c2c6d4",
+                        "on-surface-variant": "#424752",
+                        "surface": "#f7f9fe",
+                        "surface-container-highest": "#e0e2e7",
+                        "on-surface": "#191c1f",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#e0dfdf",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e6e8ed",
+                        "secondary": "#5d5e5f",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "surface-tint": "#005db6",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d8dade",
+                        "secondary-fixed": "#e3e2e2",
+                        "surface-variant": "#e0e2e7",
+                        "tertiary-fixed-dim": "#a6c9f8",
+                        "surface-container-low": "#f2f4f8",
+                        "primary-container": "#005eb8",
+                        "tertiary-container": "#3e618b",
+                        "primary-fixed": "#d6e3ff",
+                        "on-secondary-container": "#626363",
+                        "on-secondary-fixed-variant": "#464747",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2d3134",
+                        "on-tertiary-fixed-variant": "#244871",
+                        "background": "#f7f9fe",
+                        "inverse-on-surface": "#eff1f5",
+                        "error": "#ba1a1a",
+                        "surface-container": "#eceef2",
+                        "surface-bright": "#f7f9fe",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#00468c",
+                        "primary": "#00478d",
+                        "on-tertiary-fixed": "#001c37",
+                        "on-tertiary-container": "#c3dbff",
+                        "outline": "#727783"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "margin": "24px",
+                        "container-max": "1440px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Public Sans"],
+                        "data-tabular": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h3": ["Public Sans"],
+                        "h1": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "data-tabular": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 flex justify-between items-center px-lg z-10 bg-surface border-b border-outline-variant h-16">
+<div class="flex items-center gap-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-md py-sm bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-1 focus:ring-primary focus:border-primary w-96" placeholder="Search trials or analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">settings</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">notifications</span>
+</div>
+<div class="flex items-center gap-sm pl-md border-l border-outline-variant">
+<div class="text-right">
+<p class="font-body-md font-bold text-on-surface">Dr. Aris Thorne</p>
+<p class="text-label-caps text-on-surface-variant">Chief Medical Officer</p>
+</div>
+<img alt="Chief Medical Officer Profile" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A professional headshot of a mature female doctor with a stethoscope around her neck, set against a clean, sterile clinic background. The lighting is bright and high-key, reflecting a modern medical environment. The color palette is composed of clinical whites and soft blues, conveying authority, reliability, and expertise in a clinical research setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo94d3GrkitRnokPVxX9bNeCuABujo7T8f9sJlbfSGO5LOc3d5SRc-p8HK6M_EBXqKARraRI85KK494wLDs8iUBotRfhK9Tq4mme_PTYjhxadAKXN8Fd2CwfHy8yAVgAmIRZ7Tk6b_qpcctK9TXDXftvujxPlxPHp3EV9XqF6IC4cPQCbkqnEIhR2cAsdgkSsSLmWKLMCzRerSLwmLI7RBk5tDTDHW4vBhdzGswB6Mz180pCCg2MOZbn4cnVdrW4P-cd23fo2heFL_"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full flex flex-col py-lg bg-surface-container-lowest border-r border-outline-variant w-64 h-screen z-20">
+<div class="px-lg mb-xl">
+<h1 class="font-h3 text-h3 font-bold tracking-tight text-primary">BioStat</h1>
+<p class="text-label-caps text-on-surface-variant tracking-wider uppercase">Clinical Analytics</p>
+</div>
+<div class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md py-md px-lg mx-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg mx-2 bg-primary text-on-primary rounded-lg shadow-sm" href="#">
+<span class="material-symbols-outlined">clinical_notes</span>
+<span class="font-body-md font-bold">Trials</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg mx-2 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md">Patients</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg mx-2 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-body-md">Alerts</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg mx-2 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body-md">Reports</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg mx-2 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md">Admin</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg mx-2 text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md">FAQ</span>
+</a>
+</div>
+<div class="px-lg mt-auto">
+<div class="p-md bg-surface-container rounded-lg border border-outline-variant">
+<p class="text-label-caps text-on-surface-variant mb-xs">DATABASE STATUS</p>
+<div class="flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-body-md font-bold">Secure Connection</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-lg h-[calc(100vh-64px)] overflow-y-auto grid grid-cols-12 gap-lg">
+<!-- Header & Control Bar -->
+<div class="col-span-12 flex justify-between items-end mb-sm">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">Treatment Efficacy Analytics</h2>
+<p class="text-body-md text-on-surface-variant">Trial ID: BST-2024-PhaseIII-09 | Treatment Arm A vs Placebo</p>
+</div>
+<div class="flex gap-md">
+<button class="h-[36px] px-lg border border-outline-variant bg-white text-primary font-bold rounded flex items-center gap-sm hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>Filter Data</span>
+</button>
+<button class="h-[36px] px-lg bg-primary text-on-primary font-bold rounded flex items-center gap-sm shadow-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">export_notes</span>
+<span>Export Protocol</span>
+</button>
+</div>
+</div>
+<!-- Metrics Bento Row -->
+<div class="col-span-12 grid grid-cols-4 gap-md">
+<div class="bg-white border border-outline-variant p-md rounded-lg flex flex-col justify-between">
+<p class="text-label-caps text-on-surface-variant">P-VALUE (PRIMARY ENDPOINT)</p>
+<p class="font-h1 text-h1 text-primary">0.0042</p>
+<div class="bg-primary/10 text-primary px-sm py-xs rounded text-label-caps inline-block w-fit mt-sm">STATISTICALLY SIGNIFICANT</div>
+</div>
+<div class="bg-white border border-outline-variant p-md rounded-lg flex flex-col justify-between">
+<p class="text-label-caps text-on-surface-variant">HAZARD RATIO (95% CI)</p>
+<p class="font-h1 text-h1 text-on-surface">0.68 <span class="text-body-lg text-on-surface-variant font-normal">[0.54, 0.82]</span></p>
+<p class="text-body-md text-on-surface-variant mt-sm">Reduced risk of progression by 32%</p>
+</div>
+<div class="bg-white border border-outline-variant p-md rounded-lg flex flex-col justify-between">
+<p class="text-label-caps text-on-surface-variant">MEDIAN SURVIVAL (MO)</p>
+<div class="flex items-baseline gap-sm">
+<p class="font-h1 text-h1 text-on-surface">24.5</p>
+<p class="text-body-md text-on-surface-variant">vs 18.2</p>
+</div>
+<p class="text-body-md text-primary mt-sm">+6.3 Months Improvement</p>
+</div>
+<div class="bg-white border border-outline-variant p-md rounded-lg flex flex-col justify-between">
+<p class="text-label-caps text-on-surface-variant">PATIENTS ENROLLED (N)</p>
+<p class="font-h1 text-h1 text-on-surface">1,240</p>
+<div class="flex items-center gap-xs mt-sm">
+<span class="material-symbols-outlined text-primary text-[16px]">check_circle</span>
+<span class="text-body-md text-on-surface-variant">Data Maturity: 98.4%</span>
+</div>
+</div>
+</div>
+<!-- Main Analytics Workspace -->
+<div class="col-span-9 grid grid-cols-1 gap-lg">
+<!-- Kaplan-Meier Plot Section -->
+<div class="bg-white border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="bg-surface-container p-md border-b border-outline-variant flex justify-between items-center">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">show_chart</span>
+<h3 class="font-h3 text-h3">Kaplan-Meier Survival Analysis</h3>
+</div>
+<div class="flex gap-sm">
+<span class="px-sm py-xs bg-white border border-outline-variant rounded text-label-caps text-on-surface-variant">95% CI BANDS</span>
+<span class="px-sm py-xs bg-white border border-outline-variant rounded text-label-caps text-on-surface-variant">LOG-RANK: P &lt; 0.001</span>
+</div>
+</div>
+<div class="p-lg h-[400px] relative">
+<img alt="Kaplan-Meier Survival Plot" class="w-full h-full object-cover opacity-80" data-alt="A clean, scientific Kaplan-Meier survival curve diagram displayed on a digital medical monitor. Two distinct lines—one in laboratory blue and one in dark grey—descend across a grid background. The lighting is clinical and even, highlighting the precise data points and confidence interval shading. The overall aesthetic is mathematical, professional, and high-density, mirroring a medical research terminal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJMQLImfBqHViCAvqDYY1miH20L9XylBXAcoSAsXPuASkDxNT5Sv4FrJ8Ws5OagXhTQYmXZyUkicDL2JW1epggCFk3AuxukF4_BSCFCYipbXmDz9MI2QhexXMKFbVXDybWshgaPzLsjEtQElSjcVmLcbBJ5-uqRz-80k8OMJeV5inFjb5ookv053wP1ZzCw56TVBdufVV6NE1AFvtpERCpwzegryyE-NMB4RtifkSuHwkDlr__tNpxZc0EUdr417dckj3WdFgju2iw"/>
+<!-- Overlay Legend -->
+<div class="absolute bottom-xl left-xl bg-white/90 backdrop-blur-sm border border-outline-variant p-md rounded flex flex-col gap-sm">
+<div class="flex items-center gap-sm">
+<span class="w-4 h-0.5 bg-primary"></span>
+<span class="text-body-md font-bold">Treatment Arm (Arm A)</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="w-4 h-0.5 bg-secondary"></span>
+<span class="text-body-md">Placebo Control (Arm B)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Side-by-Side Plots -->
+<div class="grid grid-cols-2 gap-lg">
+<!-- Violin Plot -->
+<div class="bg-white border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="bg-surface-container p-md border-b border-outline-variant">
+<h3 class="font-h3 text-h3 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">bar_chart</span>
+                            Biomarker Distribution
+                        </h3>
+</div>
+<div class="p-lg h-[300px]">
+<img alt="Violin Plots" class="w-full h-full object-contain" data-alt="A technical visualization showing violin plots for medical data distribution. The chart features de-saturated blue and teal shapes representing density curves, with box plots embedded inside. The background is a sterile, light grey grid. The lighting is bright and laboratory-like, emphasizing clarity and statistical rigor in a clinical data context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF5FrO43GUg_emEw-qyW-A7NOh3Jcy58UrFS35oXJaNlKZiKxp2OKZ7LZc1MHopXBGGgpx0ehxqKesrVrSLB0AF7y5qGMqgfyPdXm6KURwxv3X9aDa0hB9ZgG3yjiEtYT-AnmWMESBG4YMmlTS2ojTACvRJvq4ar4TrEAWG7HA9_wC6vWs2-4ZdqIJlxYj2A2pPnEXKtftc9bm2kKGRQtvY3_7ncB4K3hXWnOgDTZ11xQkeSzOrMRmBjXXVlASQLbWM63kaJ03aSZr"/>
+</div>
+<div class="px-lg pb-lg">
+<p class="text-body-md text-on-surface-variant italic">Violin plot showing log-normalized protein expression across treatment cycles.</p>
+</div>
+</div>
+<!-- Forest Plot -->
+<div class="bg-white border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="bg-surface-container p-md border-b border-outline-variant">
+<h3 class="font-h3 text-h3 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">format_align_left</span>
+                            Subgroup Analysis
+                        </h3>
+</div>
+<div class="p-lg h-[300px]">
+<img alt="Forest Plot" class="w-full h-full object-contain" data-alt="A detailed forest plot displaying hazard ratios for various patient subgroups. Horizontal lines with square markers represent effect sizes and confidence intervals, aligned against a vertical line at 1.0. The design is minimalist and clinical, using a palette of laboratory blue and crisp black on a white background, optimized for quick professional auditing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDACfBdEFbncW2ypytIeyEyMvF1uof1wPYiwe4IEd455wNLEwjsrKZhzGjR61j5GaPLUY16GbGs7tjCZWqBL4QDDbL1AsWBg5ylW7n7cbkl4bh9VREPqCp_CLjXYuraLM3AkP41uiDb6eRkGH9Y-Hg63r9vm78JqEbRffV2W5_J8U_AdFByz5LQK9J6FrdS5fJdyn4JFMt1HX2s8taLig4ph-mTi19z1h4fm2RePG_hsJuDajrdIpN6AwAkT_3pzwKoJV_LANjnLrIF"/>
+</div>
+<div class="px-lg pb-lg">
+<p class="text-body-md text-on-surface-variant italic">Forest plot favoring treatment across all predefined subgroups (Age, Gender, Baseline PSA).</p>
+</div>
+</div>
+</div>
+<!-- Detailed Data Table -->
+<div class="bg-white border border-outline-variant rounded-lg overflow-hidden mb-xl">
+<div class="bg-surface-container p-md border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-h3 text-h3">Raw Statistical Metadata</h3>
+<button class="text-primary font-bold text-body-md hover:underline">View Expanded Table</button>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface border-b border-outline-variant">
+<th class="p-md text-label-caps text-on-surface-variant">PARAMETER</th>
+<th class="p-md text-label-caps text-on-surface-variant">TREATMENT ARM (N=620)</th>
+<th class="p-md text-label-caps text-on-surface-variant">PLACEBO ARM (N=620)</th>
+<th class="p-md text-label-caps text-on-surface-variant">P-VALUE</th>
+<th class="p-md text-label-caps text-on-surface-variant">STATUS</th>
+</tr>
+</thead>
+<tbody class="text-data-tabular">
+<tr class="border-b border-outline-variant hover:bg-surface transition-colors">
+<td class="p-md font-bold">OS (Median Months)</td>
+<td class="p-md">24.5 (22.1 - 27.8)</td>
+<td class="p-md">18.2 (16.4 - 19.9)</td>
+<td class="p-md">0.0001</td>
+<td class="p-md">
+<span class="bg-green-100 text-green-900 px-sm py-xs rounded text-label-caps">PASSED</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface transition-colors">
+<td class="p-md font-bold">PFS (Median Months)</td>
+<td class="p-md">14.2 (12.8 - 15.6)</td>
+<td class="p-md">9.4 (8.1 - 10.2)</td>
+<td class="p-md">0.0034</td>
+<td class="p-md">
+<span class="bg-green-100 text-green-900 px-sm py-xs rounded text-label-caps">PASSED</span>
+</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="p-md font-bold">ORR (%)</td>
+<td class="p-md">68%</td>
+<td class="p-md">42%</td>
+<td class="p-md">0.0215</td>
+<td class="p-md">
+<span class="bg-green-100 text-green-900 px-sm py-xs rounded text-label-caps">PASSED</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Side Panel: Annotations & Comments -->
+<div class="col-span-3 flex flex-col gap-lg h-full pb-xl">
+<!-- Clinical Annotations -->
+<div class="bg-white border border-outline-variant rounded-lg flex flex-col flex-1 overflow-hidden">
+<div class="bg-surface-container p-md border-b border-outline-variant">
+<h3 class="font-h3 text-h3 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">rate_review</span>
+                        Annotations
+                    </h3>
+</div>
+<div class="p-md flex-1 overflow-y-auto flex flex-col gap-md">
+<div class="p-md bg-surface-container-low rounded border border-outline-variant border-l-4 border-l-primary">
+<div class="flex justify-between items-start mb-xs">
+<span class="text-label-caps text-primary">NOTE #024</span>
+<span class="text-label-caps text-on-surface-variant">14:20 PM</span>
+</div>
+<p class="text-body-md font-bold mb-xs">Censoring Event Analysis</p>
+<p class="text-body-md text-on-surface-variant">Higher rate of censoring observed in the placebo arm after month 18 due to cross-over protocol allowed per ethics board review.</p>
+</div>
+<div class="p-md bg-surface-container-low rounded border border-outline-variant border-l-4 border-l-secondary">
+<div class="flex justify-between items-start mb-xs">
+<span class="text-label-caps text-secondary">PROTOCOL #09</span>
+<span class="text-label-caps text-on-surface-variant">Yesterday</span>
+</div>
+<p class="text-body-md font-bold mb-xs">Exclusion Criteria Update</p>
+<p class="text-body-md text-on-surface-variant">Ensuring patients with previous radiotherapy are correctly weighted in the Forest Plot analysis for consistency.</p>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant">
+<button class="w-full py-sm border border-primary text-primary font-bold rounded hover:bg-primary/5 transition-all flex justify-center items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        New Annotation
+                    </button>
+</div>
+</div>
+<!-- Team Comments -->
+<div class="bg-white border border-outline-variant rounded-lg flex flex-col h-[400px]">
+<div class="bg-surface-container p-md border-b border-outline-variant">
+<h3 class="font-h3 text-h3 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">forum</span>
+                        Team Comments
+                    </h3>
+</div>
+<div class="p-md flex-1 overflow-y-auto flex flex-col gap-md scrollbar-hide">
+<div class="flex gap-sm">
+<img alt="Dr. Miller" class="w-8 h-8 rounded-full" data-alt="A portrait of a male clinical researcher in a white lab coat, looking intently at a digital tablet. The background is a modern laboratory with stainless steel equipment. The lighting is cool and professional, creating a sense of serious medical inquiry." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcgGPordtKIFfzBHepO3kt9YBdaGsq0bR8qvGE-6M77-iSFLJNGn-bkGT5-wMmh0zb_yN-CtQJwhTxu-gz2HDd4gLRTjAMPV-0VIKAMrOm4HfDnFI5xBwuvtffO-QkPK8CBokeLpI8nlP64q1grTpX-OyXvg1TuPJLrMIZIbmQpzRWmBXnY9QcHfzPEgRdoVGPXkpMo_VOWS1BESu7u9QQxe59LtYj8OUIUUqdswlNa6oh9IL-xVyEG-SFKPT_Ubj0633tlj27PAQI"/>
+<div class="flex-1">
+<p class="text-body-md"><span class="font-bold">Dr. Miller:</span> The hazard ratio drop at month 12 is impressive. Have we verified the patient attrition rate?</p>
+<p class="text-label-caps text-on-surface-variant mt-xs">2 hours ago</p>
+</div>
+</div>
+<div class="flex gap-sm">
+<img alt="Sarah Chen" class="w-8 h-8 rounded-full" data-alt="A headshot of a young female data scientist with glasses, smiling confidently against a background of abstract data visualizations. The lighting is soft and bright, using a clean-room aesthetic. The color palette is dominated by whites, light greys, and clinical blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6_-1efMJ-saeTIj25Y0eX9hXjT_anL1srnnQliPqmJxhoPbGPM8rRbGcV83oo5nkhmGwx2NgYJxOm4Y9ZnJG9ytdzALxnqeOYZyzv2t0ZzuQd8ebAuGBBDc04s9EFpwRB1M3kFVG4C2G6vixNs5ey3JxFWYZ51qaGzLHfAnpLdGT-QzJqfzNqud42RzuNYzEYDfSYZ3kMxSupSHd23-uc43NSVwefPlDGWJ4m7QUt6LwxCsvvl9CwHhwb9XjPCPbXVVuVTtA9Um6c"/>
+<div class="flex-1">
+<p class="text-body-md"><span class="font-bold">Sarah Chen:</span> Attrition verified. The drop is genuine. P-value holds even after sensitivity analysis.</p>
+<p class="text-label-caps text-on-surface-variant mt-xs">1 hour ago</p>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant">
+<div class="relative">
+<input class="w-full pl-3 pr-10 py-sm border border-outline-variant rounded-lg text-body-md focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Add a comment..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-primary cursor-pointer">send</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

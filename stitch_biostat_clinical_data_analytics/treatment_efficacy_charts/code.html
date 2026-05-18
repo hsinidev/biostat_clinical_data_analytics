@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .violin-shape {
+      clip-path: polygon(50% 0%, 80% 20%, 95% 50%, 80% 80%, 50% 100%, 20% 80%, 5% 50%, 20% 20%);
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-high": "#e6e8ed",
+            "outline-variant": "#c2c6d4",
+            "secondary-fixed": "#e3e2e2",
+            "surface-variant": "#e0e2e7",
+            "outline": "#727783",
+            "on-primary-fixed-variant": "#00468c",
+            "surface-container-lowest": "#ffffff",
+            "primary-container": "#005eb8",
+            "on-error": "#ffffff",
+            "inverse-on-surface": "#eff1f5",
+            "on-tertiary-fixed": "#001c37",
+            "on-background": "#191c1f",
+            "tertiary-fixed-dim": "#a6c9f8",
+            "secondary-fixed-dim": "#c6c6c6",
+            "on-surface-variant": "#424752",
+            "on-tertiary-container": "#c3dbff",
+            "surface-dim": "#d8dade",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#001b3d",
+            "on-tertiary": "#ffffff",
+            "on-surface": "#191c1f",
+            "surface-container": "#eceef2",
+            "surface-container-highest": "#e0e2e7",
+            "primary-fixed-dim": "#a9c7ff",
+            "tertiary-fixed": "#d2e4ff",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "secondary": "#5d5e5f",
+            "surface": "#f7f9fe",
+            "tertiary-container": "#3e618b",
+            "primary": "#00478d",
+            "surface-bright": "#f7f9fe",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#005db6",
+            "on-secondary-container": "#626363",
+            "secondary-container": "#e0dfdf",
+            "on-secondary-fixed-variant": "#464747",
+            "on-secondary-fixed": "#1a1c1c",
+            "on-tertiary-fixed-variant": "#244871",
+            "surface-container-low": "#f2f4f8",
+            "primary-fixed": "#d6e3ff",
+            "tertiary": "#244971",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#2d3134",
+            "inverse-primary": "#a9c7ff",
+            "on-primary-container": "#c8daff",
+            "background": "#f7f9fe"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin": "24px",
+            "sm": "8px",
+            "lg": "24px",
+            "container-max": "1440px",
+            "gutter": "16px",
+            "xl": "32px",
+            "xs": "4px",
+            "md": "16px",
+            "base": "4px"
+          },
+          "fontFamily": {
+            "h1": ["Public Sans"],
+            "data-tabular": ["Inter"],
+            "h3": ["Public Sans"],
+            "body-lg": ["Inter"],
+            "h2": ["Public Sans"],
+            "body-md": ["Inter"],
+            "label-caps": ["Inter"]
+          },
+          "fontSize": {
+            "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "data-tabular": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+            "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+            "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-dim flex justify-between items-center w-full px-lg h-[56px] border-b border-outline-variant dark:border-outline fixed top-0 z-50">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">clinical_notes</span>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed">BioStat</h1>
+</div>
+<div class="flex items-center">
+<button class="p-xs hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors duration-150 ease-in-out rounded-lg">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">visibility_off</span>
+</button>
+</div>
+</header>
+<main class="pt-[56px] pb-[64px] min-h-screen px-md">
+<!-- Header Section -->
+<section class="py-lg">
+<h2 class="font-h3 text-h3 text-on-surface mb-xs">Treatment Efficacy</h2>
+<p class="font-body-md text-on-surface-variant">Statistical distribution across trial cohorts (n=2,480)</p>
+</section>
+<!-- Navigation Tabs (Sub-Navigation) -->
+<div class="flex gap-md mb-lg border-b border-outline-variant overflow-x-auto no-scrollbar">
+<button class="pb-sm border-b-2 border-primary text-primary font-bold px-xs font-label-caps">VIOLIN PLOTS</button>
+<button class="pb-sm text-on-surface-variant px-xs font-label-caps">FOREST PLOTS</button>
+<button class="pb-sm text-on-surface-variant px-xs font-label-caps">KAPLAN-MEIER</button>
+</div>
+<!-- Main Chart Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md mb-lg shadow-sm">
+<div class="flex justify-between items-center mb-lg">
+<div>
+<h3 class="font-label-caps text-on-surface-variant">PRIMARY ENDPOINT: PH3</h3>
+<p class="font-h3 text-h3">Delta Sensitivity Index</p>
+</div>
+<span class="material-symbols-outlined text-outline">info</span>
+</div>
+<!-- Violin Plot Visualization Canvas -->
+<div class="relative h-[320px] w-full flex items-end justify-around border-b border-l border-outline-variant pb-base pl-base">
+<!-- Y-Axis Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pr-md">
+<div class="border-t border-surface-variant w-full flex justify-end"><span class="font-data-tabular text-[10px] -mt-2">+2.5</span></div>
+<div class="border-t border-surface-variant w-full flex justify-end"><span class="font-data-tabular text-[10px] -mt-2">+1.2</span></div>
+<div class="border-t border-primary-container/20 w-full flex justify-end"><span class="font-data-tabular text-[10px] -mt-2 text-primary font-bold">0.0</span></div>
+<div class="border-t border-surface-variant w-full flex justify-end"><span class="font-data-tabular text-[10px] -mt-2">-1.2</span></div>
+<div class="border-t border-surface-variant w-full flex justify-end"><span class="font-data-tabular text-[10px] -mt-2">-2.5</span></div>
+</div>
+<!-- Cohort A (Control) -->
+<div class="relative w-16 h-full flex flex-col items-center justify-center">
+<div class="absolute bottom-1/4 w-8 h-3/4 bg-primary-fixed-dim/40 border border-primary/20 violin-shape"></div>
+<div class="absolute bottom-[45%] w-0.5 h-1/4 bg-primary"></div> <!-- IQR Range -->
+<div class="absolute bottom-1/2 w-4 h-1 bg-primary rounded-full"></div> <!-- Median -->
+<span class="absolute -bottom-6 font-label-caps text-on-surface-variant">CTR-L01</span>
+</div>
+<!-- Cohort B (Active 5mg) -->
+<div class="relative w-16 h-full flex flex-col items-center justify-center">
+<div class="absolute bottom-[35%] w-10 h-1/2 bg-primary/20 border border-primary/40 violin-shape"></div>
+<div class="absolute bottom-[40%] w-0.5 h-1/3 bg-primary"></div> <!-- IQR Range -->
+<div class="absolute bottom-[55%] w-4 h-1 bg-primary rounded-full"></div> <!-- Median -->
+<span class="absolute -bottom-6 font-label-caps text-on-surface-variant">ACT-005</span>
+</div>
+<!-- Cohort C (Active 10mg) -->
+<div class="relative w-16 h-full flex flex-col items-center justify-center">
+<div class="absolute bottom-[45%] w-12 h-2/5 bg-primary border border-primary-container violin-shape"></div>
+<div class="absolute bottom-[50%] w-0.5 h-1/4 bg-surface-container-lowest"></div> <!-- IQR Range -->
+<div class="absolute bottom-[62%] w-4 h-1 bg-surface-container-lowest rounded-full"></div> <!-- Median -->
+<span class="absolute -bottom-6 font-label-caps text-on-surface-variant font-bold text-primary">ACT-010</span>
+</div>
+</div>
+<div class="mt-xl grid grid-cols-2 gap-md pt-lg">
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 bg-primary rounded-xs"></div>
+<span class="font-body-md">Mean Efficacy</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-[2px] bg-primary"></div>
+<span class="font-body-md">95% Conf. Interval</span>
+</div>
+</div>
+</div>
+<!-- Stats Table Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden mb-lg">
+<div class="bg-surface-container px-md py-sm border-b border-outline-variant">
+<h4 class="font-label-caps text-on-surface">COHORT PERFORMANCE METRICS</h4>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low">
+<th class="px-md py-sm font-label-caps text-on-surface-variant">COHORT</th>
+<th class="px-md py-sm font-label-caps text-on-surface-variant">P-VALUE</th>
+<th class="px-md py-sm font-label-caps text-on-surface-variant">CI (LO/HI)</th>
+</tr>
+</thead>
+<tbody class="font-data-tabular">
+<tr class="border-b border-surface-variant hover:bg-surface-container-high transition-colors">
+<td class="px-md py-md">CTR-L01</td>
+<td class="px-md py-md">—</td>
+<td class="px-md py-md text-on-surface-variant">[-0.2, 0.4]</td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-container-high transition-colors">
+<td class="px-md py-md">ACT-005</td>
+<td class="px-md py-md text-primary font-bold">0.024</td>
+<td class="px-md py-md text-on-surface-variant">[0.8, 1.6]</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="px-md py-md font-bold text-primary">ACT-010</td>
+<td class="px-md py-md text-primary font-bold">&lt;0.001</td>
+<td class="px-md py-md text-on-surface-variant">[1.9, 2.8]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Legend & Methodology Card -->
+<div class="bg-surface-container-low rounded-lg p-md border border-outline-variant border-dashed">
+<div class="flex gap-sm mb-sm">
+<span class="material-symbols-outlined text-outline text-md">fact_check</span>
+<h5 class="font-label-caps text-on-surface">METHODOLOGY</h5>
+</div>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+        Violin plots display the kernel density estimation of the underlying distribution. White center bars represent the interquartile range (IQR), while the central horizontal line marks the median efficacy value.
+      </p>
+</div>
+<!-- Data Image for Technical Context -->
+<div class="mt-lg rounded-xl overflow-hidden h-40 relative group">
+<img alt="Microscope lens viewing medical sample" class="w-full h-full object-cover" data-alt="A macro close-up of high-precision laboratory equipment and glass slides under cool, sterile blue lighting. The environment is a clean-room medical laboratory with a focused, clinical atmosphere. The color palette is dominated by Laboratory Blue and crisp whites, conveying a mood of absolute data integrity and scientific accuracy. Reflections of digital data interfaces are visible on the polished metallic surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuZ1xP1DYkORCX-ZVtoLbqVjmvHn8R2kmnhYR7At8ymv39cWfUbT2nflY_GJcOwgRbVSegMAMhaD6C7DVDB8pLDL7ZzOnJP-5y8MwLT6_20f_kFgtIiSIOEICofussWvIzHWPWR9SmhYvjgl6ptFqzQK_Yi8T60GyHhJ-95yQQEf4wMXneWoIGxz98mOCPoJeCveEeYm7E4Gub5JO8M6-0LIS73OjNaTWVv5AdNnBp9P1xuwyATHztqkKj1TP25WVnCl2djohEOCa6"/>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all">
+<span class="bg-surface-container-lowest/90 px-md py-sm rounded-full text-primary font-label-caps border border-primary/20">LIVE TELEMETRY ACTIVE</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-[64px] px-md bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant dark:border-outline z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-variant transition-transform duration-100 scale-95">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed font-bold hover:bg-surface-container dark:hover:bg-surface-variant transition-transform duration-100 scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">magnification_small</span>
+<span class="font-label-caps text-label-caps">Trials</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-variant transition-transform duration-100 scale-95">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-caps text-label-caps">Patients</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-variant transition-transform duration-100 scale-95">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-label-caps text-label-caps">Alerts</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-variant transition-transform duration-100 scale-95">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</div>
+</nav>
+</body></html>
